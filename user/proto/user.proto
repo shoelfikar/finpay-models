@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package proto;
+
+option go_package = "proto/user";
+
+message RegisterRequest {
+    string name = 1;
+    string email = 2;
+    string password = 3;
+    string created_by = 4;
+}
+
+message User {
+    string ID = 1;
+    string name = 2;
+    string email = 3;
+    string status = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+    string created_by = 7; 
+}
+
+message Credential {
+    string access_token = 1;
+    google.protobuf.Timestamp token_expired = 2;
+    string refresh_token = 3;
+    google.protobuf.Timestamp refresh_token_expired = 4; 
+}
+
+message RegisterResponse {
+    User user = 1;
+    Credential auth = 2;
+}
+
+service UserService {
+    rpc Register(RegisterRequest) returns (RegisterResponse);
+}
